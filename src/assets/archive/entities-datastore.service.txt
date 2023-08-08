@@ -1,0 +1,29 @@
+import { Injectable }  from '@angular/core';
+  
+import { Entity } from '@secfix/home/models';
+
+interface IDatastore {
+    brands: Record<number, Entity[]>;
+    categories: Record<number, Entity[]>;
+    families: Record<number, Entity[]>;
+    products: Record<number, Entity[]>;
+}
+
+type StoreKey = "brands" | "categories" | "families" | "products";
+
+@Injectable()
+export class EntitiesDatastoreService { 
+    private _datastore: IDatastore = { brands: {}, categories: {}, families: {}, products: {} };
+
+    public store(key: StoreKey, field: number, value: Array<Entity>): void {
+        this._datastore[key][field] = value;
+    }
+    
+    public retrieve(key: StoreKey, field: number): Array<Entity> {
+        return this._datastore[key][field];
+    }
+
+    public dispose(): void {
+        this._datastore = { brands: {}, categories: {}, families: {}, products: {} };
+    }
+}

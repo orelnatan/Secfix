@@ -1,0 +1,25 @@
+
+<modal 
+    [title]="data.title!" 
+    [subTitle]="data.subTitle!" 
+    [titleColor]="colors[data.type]"
+    [excludeActions]="!data.actions?.length"
+>
+    <ng-container content>
+        <div class="alert-modal-content {{ data.type }}">
+            <hr />
+            
+            <div class="alert-desc">
+                {{ data.content }}
+            </div>
+        </div>
+    </ng-container>
+    
+    <ng-container actions>
+        <button *ngFor="let action of data.actions" mat-raised-button
+                (click)="handleAction(action)"
+            >
+            {{ action.name }}
+        </button>
+    </ng-container>
+</modal>

@@ -1,0 +1,14 @@
+
+<div class="modal-main">
+    <h2 mat-dialog-title [style.color]="titleColor">{{ title }}</h2>
+    <h3><strong>{{ subTitle }}</strong></h3>
+    <h3><strong>{{ underSubTitle }}</strong></h3>
+
+    <mat-dialog-content class="mat-typography">
+        <ng-content select="[content]"></ng-content>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end" *ngIf="!excludeActions">
+        <ng-content select="[actions]"></ng-content>
+    </mat-dialog-actions>
+</div>

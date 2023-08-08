@@ -1,0 +1,22 @@
+
+<page-layout>
+    <div class="categories-page-main">
+        <ng-container #resolver="resolver"
+            [rxResolver]="categories$"
+        >
+            <elements-grid *ngIf="!resolver.inProcess; else loader"
+                [elementMinSizePx]="255"
+            >
+                <category-card *ngFor="let category of resolver.data as categories"
+                    [category]="category"> 
+                </category-card>
+            </elements-grid>
+
+            <ng-template #loader>
+                <page-loader></page-loader>
+            </ng-template>
+        </ng-container>
+    </div>
+</page-layout>
+
+

@@ -1,0 +1,22 @@
+
+<page-layout>
+    <div class="brnads-page-main">
+        <ng-container #resolver="resolver"
+            [rxResolver]="brands$"
+        >
+            <elements-grid *ngIf="!resolver.inProcess; else loader"
+                [elementMinSizePx]="255"
+            >
+                <brand-card *ngFor="let brand of resolver.data as brands"
+                    [brand]="brand"> 
+                </brand-card>
+            </elements-grid>
+
+            <ng-template #loader>
+                <page-loader></page-loader>
+            </ng-template>
+        </ng-container>
+    </div>
+</page-layout>
+
+

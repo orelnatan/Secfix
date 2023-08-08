@@ -1,0 +1,33 @@
+
+<div *ngFor="let skeleton of [100, 90, 80, 70, 60, 50, 40, 30, 20, 10]">
+    <ngx-skeleton-loader 
+        [count]="1" 
+        [appearance]="'circle'"
+        [theme]="{
+            'height.px': 25,
+            'width.%': skeleton,
+            'border-radius.px': 20,
+            'margin-top.px': 5
+        }"
+    >
+    </ngx-skeleton-loader>
+</div>
+
+
+<div class="grid-container" 
+    [style.grid-template-columns]="'repeat(auto-fill, minmax(' + elementMinSizePx + 'px, 1fr))'"
+>
+    <div class="ngx-skeleton-loader-container" *ngFor="let skeleton of [1,1,1,1,1,1]">
+        <ngx-skeleton-loader 
+            [count]="1" 
+            [appearance]="'circle'"
+            [theme]="{
+                'height.px': 185,
+                'width': '100%',
+                'border-radius': 0,
+                'margin': 0
+            }"
+        >
+        </ngx-skeleton-loader>
+    </div>
+</div>

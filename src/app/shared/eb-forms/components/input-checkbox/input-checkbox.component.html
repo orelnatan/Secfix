@@ -1,0 +1,10 @@
+
+<div class="input-checkbox-main" [errorState]="control" [disabledState]="readonly">
+    <mat-checkbox [checked]="value" [disabled]="readonly" (change)="onchange.emit($event.checked)">
+        <span class="checkbox-placeholder">{{ placeholder }}</span>    
+    </mat-checkbox>
+
+    <div class="checkbox-error-wrapper" *ngIf="control | controlValidity">
+        <mat-error>{{ validation | validation: control.errors! }}</mat-error>
+    </div>
+</div>

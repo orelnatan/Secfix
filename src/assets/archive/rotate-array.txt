@@ -1,0 +1,23 @@
+
+function rotateLeft(arr){
+    let first = arr.shift();
+    arr.push(first);
+    return arr;
+}
+
+function rotateRight(arr){
+    let last = arr.pop();
+    arr.unshift(last);
+    return arr;
+}
+
+let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+
+console.log("origin: ", arr);
+console.log(rotateRight(arr));
+console.log(rotateRight(arr));
+console.log(rotateRight(arr));
+console.log(rotateRight(arr));
+console.log(rotateRight(arr));
+console.log(rotateRight(arr));
+console.log(rotateRight(arr));

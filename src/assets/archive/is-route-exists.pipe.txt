@@ -1,0 +1,12 @@
+import { Pipe, PipeTransform } from '@angular/core';
+
+import { ICrumb } from '../models';
+
+@Pipe({
+   name: 'isRouteExists',
+})
+export class IsRouteExistsPipe implements PipeTransform {
+    transform(routeId: string, crumbs: Array<ICrumb>): boolean {  
+        return true; 
+    }
+}

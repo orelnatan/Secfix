@@ -1,0 +1,138 @@
+
+  tests:
+
+  - Provided-in root service (multiple events, @UntilDestroy(), @Injectable({providedIn: "root"})) - V
+
+    When using the decorator on a provided-in root service, we need to include "GlobalEventsModule" at the "app-module" imports array,
+    since provided-in root service will be declered at the top level module(app-module), this module need to support GlobalEventsModule.
+
+  - Provided in module service (multiple events, @UntilDestroy()) - V
+
+  - Provided in component service (multiple events) - V
+
+  - Provided using factory service (multiple events) - V
+    When provide a service using a factory, we dont need to use the "dependencies" array of the decorator.
+    ** it seems like there is a need to use in the dependencies array(of the decorator) only in an "@Injectable()' class.
+
+  - Guard (multiple events) - V
+
+  - Resolver (multiple events) - V
+
+  - Atr directive (multiple events) - (multiple events, @UntilDestroy()) - V
+
+  - Struct directive (multiple events) - V
+
+  - Component (multiple events, @UntilDestroy(), @Injectable()) - V
+  
+  - Pipe (multiple events, @UntilDestroy(), @Injectable()) - V
+
+    //////////////////////////////////////////////////////////////////////////////////////////
+    checks:
+
+    import { Interceptor } from '@secfix/shared/global-events';
+    import { GlobalEventTypes } from '@secfix/core/models';
+
+    @Interceptor([
+        { type: GlobalEventTypes.Error, action: "error" },
+        { type: GlobalEventTypes.Login, action: "login" },
+        { type: GlobalEventTypes.InProgress, action: "progress"}]
+    )
+
+    ngOnDestroy(): void {
+        console.log("ngOnDestroy")
+    }
+
+    error() {
+        console.log("error")
+    }
+
+    login() {
+        console.log("login")
+    }
+
+    progress() {
+        console.log("progress")
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////
+    import { GlobalEventTypes, Globaleventservice } from '@secfix/shared/global-events';
+
+
+    constructor(
+        public readonly secfixLocalStorageService: SecfixLocalStorageService,
+        private readonly globalEventsService: GlobalEventsService
+    ) {}
+
+    sendSignals() {
+        this.globalEventsService.dispatch(GlobalEventTypes.Login);
+        this.globalEventsService.dispatch(GlobalEventTypes.Error);
+        this.globalEventsService.dispatch(GlobalEventTypes.InProgress);
+    }
+
+
+
+const injector = inject(Injector);
+const renderer2 = injector.get(Renderer2);
+
+renderer2.listen("window", type, event => {
+    this[action](event);
+});
+
+
+addEventListener(type, (event: Event) => {
+    this[action](event);
+}, {});
+
+
+const listener = (context, action) => {
+    return function (event) {
+        context[action](event);
+    }
+}
+
+
+export function GlobalEvents(type: GlobalEventTypes, action: string) {
+    return function<T extends { new(...args: any[]) : {} }>(constructor: T) {
+        return class extends constructor {
+          constructor(...args: any[]) {
+            super(...args);
+
+            let unlistener: () => void;
+            const injector = inject(Injector);
+            const renderer2 = injector.get(Renderer2);
+            
+            unlistener = renderer2.listen("window", type, event => {
+                this[action](event);
+            });
+
+            const original: Function = constructor.prototype.ngOnDestroy;
+            constructor.prototype.ngOnDestroy = function(): void {
+                unlistener();
+
+                original.apply(this, arguments)
+            }
+          }
+        }
+    }
+}
+
+// Provide a serivce without "Injectable" decorator
+export const BrandsServiceProvider = {
+    provide: BrandsService,
+    useFactory: (http: HttpClient) => new BrandsService(http),
+    deps: [HttpClient]
+}
+
+// Fire event
+dispatchEvent(new CustomEvent(GlobalEventTypes.Logout, { detail: {aaa: 312, bbb:1111} }))
+
+// Provide in module
+const ArgsProvider: Provider = {
+    provide: 'args',
+    useFactory: (httpClient: HttpClient, router: Router) => ([httpClient, router]),
+    deps: [HttpClient, Router],
+};
+
+
+
+

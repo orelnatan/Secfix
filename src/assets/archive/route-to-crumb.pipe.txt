@@ -1,0 +1,12 @@
+import { Pipe, PipeTransform } from '@angular/core';
+
+import { ICrumb } from '../models';
+
+@Pipe({
+   name: 'routeToCrumb',
+})
+export class RouteToCrumbPipe implements PipeTransform {
+    transform(routeId: string, crumbs: Array<ICrumb>): ICrumb {  
+        return {} as ICrumb; 
+    }
+}

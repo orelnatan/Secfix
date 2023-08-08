@@ -1,0 +1,46 @@
+import { Injectable }  from '@angular/core';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, Resolve, Params, Router, Navigation } from '@angular/router';
+
+import { IReturnUrl } from '../models';
+
+@Injectable()
+export class ReturnUrlResolver implements Resolve<string> {
+    constructor(
+        private readonly router: Router
+    ){}
+
+    resolve(routeSnapshot: ActivatedRouteSnapshot, stateSnapshot: RouterStateSnapshot): string {
+        const returnUrl: string = this._getPreviousUrl(this.router) || this._getDefaultUrl(routeSnapshot);
+        
+        return returnUrl;
+    }
+
+    private _getPreviousUrl(router: Router): string | null {
+        const previousNavigation: Navigation = this.router.getCurrentNavigation()?.previousNavigation!;
+
+        return previousNavigation ? router.serializeUrl(previousNavigation?.finalUrl!) : null;
+    }
+
+    private _getDefaultUrl(snapshot: ActivatedRouteSnapshot): string {
+        const returnUrl: IReturnUrl = snapshot?.routeConfig?.data?.["returnUrl"];
+        const pathParams: Params = snapshot.params;
+        const queryParams: Params = snapshot.queryParams;
+
+        const pathString: string = this._routeToPathString(pathParams, returnUrl?.route);
+        const queryString: string = this._jsonToQueryString(queryParams);
+
+        return `${pathString}${queryString}`;
+    }
+
+    private _routeToPathString(pathParams: Params, route: string): string {
+        return (route?.split("/") || []).map((route: string) => {
+            return pathParams[route] || route
+        }).join("/");
+    }
+
+    private _jsonToQueryString(queryParams: Params): string {
+        return Object.keys(queryParams).length ? `?${Object.keys(queryParams).map((key: string) => {
+            return encodeURIComponent(key) + '=' + encodeURIComponent(queryParams[key])
+        }).join('&')}` : "";
+    }
+}

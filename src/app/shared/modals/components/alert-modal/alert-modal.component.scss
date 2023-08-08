@@ -1,0 +1,38 @@
+@import './src/assets/config/colors.scss';
+
+::ng-deep.mat-dialog-container {
+    position: relative;
+}
+
+.alert-modal-content {
+    width: 500px;
+
+    hr {
+        position: absolute;
+        height: 100%;
+        top: 0px;
+        left: 0px;
+        border: 4px solid;
+    }
+
+    &.success {
+        hr { border-color: $color-success; }
+    }
+   
+    &.failure {
+        hr { border-color: $color-error; }    
+    }
+    
+    &.info {
+        hr { border-color: $color-info; }   
+    }
+    
+    &.warning {
+        hr { border-color: $color-warning; }  
+    }
+
+    &.blank {
+        hr { border-color: $color-black; }
+    }
+}
+

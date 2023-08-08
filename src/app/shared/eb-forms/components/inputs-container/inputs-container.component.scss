@@ -1,0 +1,30 @@
+
+.inputs-container-main {
+    width: 100%;
+
+    .inputs-container {
+        display: flex;
+    }
+
+    ::ng-deep input-field {
+        width: 100%;
+        min-width: 0px;
+    }
+
+    .vertical {
+        &.inputs-container {
+            flex-direction: column;
+        }
+    }
+
+    .horizontal {
+        &.inputs-container {
+            flex-direction: row;
+            margin: 0px -5px;
+        }
+
+        ::ng-deep input-field {
+            padding: 0px 5px;
+        }
+    }
+}

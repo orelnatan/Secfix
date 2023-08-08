@@ -1,0 +1,13 @@
+import { Data } from "@angular/router";
+
+import { GlobalEventTypes } from "../models";
+
+export class GlobalEvents {
+    public type: GlobalEventTypes;
+    public payload: Data;
+
+    constructor(type: GlobalEventTypes, paylaod: Data) {
+        this.type = type;
+        this.payload = paylaod;
+    }
+}

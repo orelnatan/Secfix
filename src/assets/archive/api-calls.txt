@@ -1,0 +1,130 @@
+import { Injectable, Type, }  from '@angular/core';
+import { throwError, } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams, } from '@angular/common/http';
+import { Observable, of as observableOf } from 'rxjs';  
+import { map, catchError, delay } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
+import { IProduct } from './iproduct.interface';
+import { IResponse } from './iresponse.interface';
+//const axios = require('axios').default;
+//var imgbbUploader = require('imgbb-uploader');
+
+interface IImgBBResponse {
+    data: {
+        display_url: string;
+    } 
+}
+
+@Injectable()
+export class ProductsService {
+    constructor(
+        private httpClient: HttpClient,
+    ) {}
+
+    getAllProducts(): Observable<IProduct[]> {
+        return this.httpClient.get<IProduct[]>('http://localhost:3001/get-all-brands').pipe(
+            map((response: Array<IProduct>) => {
+                return response
+            }), catchError((error: HttpErrorResponse) => {
+                return throwError(() => error);
+            })
+        )
+    }
+
+    getProductById(imdbID: number): Observable<IProduct | HttpErrorResponse> {
+        let httpParams = new HttpParams();
+        httpParams = httpParams.append('imdbID', imdbID);
+
+        return this.httpClient.get<IProduct | HttpErrorResponse>('http://localhost:3001/getProductById', { 
+            params: httpParams
+        }).pipe(
+            map((response: IProduct | HttpErrorResponse) => {
+                return response
+            }), catchError((error: HttpErrorResponse) => {
+                return throwError(() => error);
+            })
+        )
+    }
+
+    deleteProductById(imdbID: number): Observable<IResponse> {
+        let httpParams = new HttpParams();
+        httpParams = httpParams.append('imdbID', imdbID);
+
+        return this.httpClient.delete<IResponse>('http://localhost:3001/deleteProductById', { 
+            params: httpParams
+        }).pipe(
+            map((response: IResponse) => {
+                return response
+            }), catchError((error: HttpErrorResponse) => {
+                return throwError(() => error);
+            })
+        )
+    }
+
+    updateProduct(product: IProduct): Observable<IResponse> {
+        return this.httpClient.put<IResponse>('http://localhost:3001/updateProduct', product).pipe(
+            map((response: IResponse) => {
+                return response
+            }), catchError((error: HttpErrorResponse) => {
+                return throwError(() => error);
+            })
+        )
+    }
+
+    uploadPhotoToImageBB(file: File): Observable<string> {
+        const payload = new FormData();
+        payload.append('image', file);
+
+        return this.httpClient.post<IImgBBResponse>('https://api.imgbb.com/1/upload', payload, {
+            params: {
+                key: "a06872ef72c0b074aaa627abfe08f9ea"
+            }
+        }).pipe(
+            map((response: IImgBBResponse): string => {
+                return response.data.display_url; 
+            }), catchError((error: HttpErrorResponse) => {
+                return throwError(() => error);
+            })
+        )
+    }
+}
+
+
+function WLResourceRequest(url: any, method: any, options: any) {
+    throw new Error('Function not implemented.');
+}
+
+
+
+
+const proxyConf = {
+    "/upload": {
+        "target": "https://api.imgbb.com/1/upload",
+        "secure": true,
+        "pathRewrite": {
+            "^/upload": ""
+        },
+        "changeOrigin": true
+    }
+}
+
+
+
+
+// //const img = "../../../../../../Desktop/life backup/Projects/React/notes/items/Bella.PNG";
+//         let httpParams = new HttpParams();
+//         httpParams = httpParams.append('key', "a06872ef72c0b074aaa627abfe08f9ea");
+//         httpParams = httpParams.append('image', img);
+
+//         let body = new FormData()
+//         body.set('key', 'a06872ef72c0b074aaa627abfe08f9ea')
+//         body.append('image', img)
+
+
+//         return this.httpClient.post<IResponse>(`https://api.imgbb.com/1/upload?key=a06872ef72c0b074aaa627abfe08f9ea&image=${img}` ,{}).pipe(
+//             map((response: IResponse) => {
+//                 return response
+//             }), catchError((error: HttpErrorResponse) => {
+//                 return throwError(() => error);
+//             })
+//         )

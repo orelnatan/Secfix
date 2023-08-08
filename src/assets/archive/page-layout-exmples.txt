@@ -1,0 +1,111 @@
+
+- Create "fixed" header using position "sticky" inside a page:
+
+<page-layout [withoutPadding]="true">
+    <div class="brnads-page-main">
+        <div class="crumbs-navbar">
+            <crumbs-navbar></crumbs-navbar>
+        </div>
+
+        <div class="brands-list">
+            // ...
+        </div>
+    </div>
+</page-layout>
+
+
+.brnads-page-main {
+   width: 100%;
+   
+   .brands-list {
+        padding: 15px;
+   }
+
+   .crumbs-navbar {
+        position: sticky;
+        top: 0;
+   }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- Create "fixed" header using <root-layout> inside a page:
+
+<root-layout>
+    <layout-header header-secondary>
+        <crumbs-navbar></crumbs-navbar>
+    </layout-header>
+
+    <page-layout>
+        <div class="brnads-page-main">
+            // ...
+        </div>
+    </page-layout>
+</root-layout>
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- Nesting <page-layout> components using divs:
+
+<page-layout [withoutPadding]="true">
+    <div class="brnads-page-main">
+        <div class="page-layout-container">
+            <page-layout>
+                <div class="page-content">
+                    // ...
+                </div>
+            </page-layout>
+        </div>
+        
+        <div class="page-layout-container">
+            <page-layout>
+                <div class="page-content">
+                    // ...
+                </div>
+            </page-layout>
+        </div>
+
+                // ...
+    </div>
+</page-layout>
+
+
+.brnads-page-main {
+   width: 100%;
+   
+   .page-content {
+    width: 100%;
+   }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- Nesting <page-layout> components using <root-layout>:
+
+<root-layout>
+    <div class="brnads-page-main">
+        <page-layout>
+            <div class="brnads-page-main">
+                // ...
+            </div>
+        </page-layout>
+
+        <page-layout>
+            <div class="brnads-page-main">
+                // ...
+            </div>
+        </page-layout>
+
+        // ...
+    </div>
+</root-layout>
+
+
+.brnads-page-main {
+   width: 100%;
+   
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+

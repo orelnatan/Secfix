@@ -1,0 +1,5 @@
+
+Chars only
+const regex: RegExp = /[^a-zA-Z]+/g;
+
+console.log('EILOMO#432'.replace(/[^a-zA-Z]+/g, '')); // EILOMO

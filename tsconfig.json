@@ -1,0 +1,51 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "skipLibCheck": true, 
+    "baseUrl": "./",
+    "paths": {
+      "@secfix/core/*": ["src/app/core/*"],
+      "@secfix/layout/*": ["src/app/layout/*"],
+      "@secfix/shared/*": ["src/app/shared/*"],
+      "@secfix/eb-forms/*": ["src/app/eb-forms/*"],
+      "@secfix/auth/*": ["src/app/auth/*"],
+      "@secfix/home/*": ["src/app/home/*"],
+      "@secfix/env/*": ["src/environments/*"],
+    },
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strictPropertyInitialization": false,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2020",
+    "module": "es2020",
+    "lib": [
+      "es2020",
+      "dom"
+    ]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictDomEventTypes": false,
+    "strictTemplates": true,
+  }
+}
+
+// https://www.npmjs.com/package/ngx-skeleton-loader
+// ngx-skeleton-loader installed with errors: "Generic type 'ɵɵComponentDeclaration' requires between 7 and 8 type arguments.ts(2707)"
+// Solution: add "skipLibCheck": true, in tsconfig.json file under "compilerOptions"
+// Found in: https://stackoverflow.com/questions/74616687/error-ts2707-generic-type-%C9%B5%C9%B5directivedeclaration-requires-between-6-and-8-type
+// Found at: 17-05-2023

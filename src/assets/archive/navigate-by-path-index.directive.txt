@@ -1,0 +1,36 @@
+import { Directive, Input, HostListener } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Directive({
+    selector: '[navigateByPathIndex]',
+})
+export class RedirectDirective {
+    @HostListener('click', ['$event']) onClick(event: Event): void {
+        this._navigateByIndex(this.index);
+    };
+
+    @Input('navigateByPathIndex') index: number;
+    
+    constructor(
+        private readonly router: Router,
+    ) {}
+
+    private _navigateByIndex(index: number): void {
+        const path: string = this._createRedirectPath(index);
+
+        this.router.navigate([`/${path}`], { queryParamsHandling: 'preserve' });
+    }
+
+    private _createRedirectPath(index: number): string {
+        const routes: Array<string> = this._resolveCurrentRoutes();
+        
+        return routes.slice(0, index + 1).join("/");
+    }
+
+    private _resolveCurrentRoutes(): Array<string> {
+        const routes: Array<string> = decodeURIComponent(window.location.pathname).split("/");
+        routes.shift();
+        
+        return routes;
+    }
+}

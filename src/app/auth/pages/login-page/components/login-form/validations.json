@@ -1,0 +1,20 @@
+
+{
+    "username": { 
+        "required": "Required field",
+        "pattern": "Use letters only",
+        "minlength": "Username should have a minimum length of 2 characters",
+        "maxlength": "Username should have a maximum length of 12 characters"
+    },
+    "email": {
+        "required": "Required field",
+        "email": "Wrong email format"
+    },
+    "password": {
+        "required": "Required field",
+        "password": "Invalid password format"
+    },
+    "rememberMe": {
+        "required": "Required field"
+    }
+}

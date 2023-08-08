@@ -1,0 +1,25 @@
+import { Injectable }  from '@angular/core';
+import { Data } from '@angular/router';
+import { BehaviorSubject, Subscription } from 'rxjs';  
+import { map, filter } from 'rxjs/operators';
+
+import { GlobalEvents } from '../classes';
+import { GlobalEventTypes } from '../models';
+
+@Injectable()
+export class GlobalEventService {
+    private subject$: BehaviorSubject<GlobalEvents> = new BehaviorSubject<GlobalEvents>(
+        {} as GlobalEvents
+    );
+
+    public dispatch(event: GlobalEvents): void {
+        this.subject$.next(event);
+    }
+
+    public subscribe(type: GlobalEventTypes, callback: (event: Data) => void): Subscription {
+        return this.subject$.pipe(
+            filter((event: GlobalEvents) => event.type === type), 
+            map((event: GlobalEvents) => event.payload)
+        ).subscribe(callback)
+    }
+}

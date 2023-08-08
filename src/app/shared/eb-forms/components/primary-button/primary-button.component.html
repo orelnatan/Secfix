@@ -1,0 +1,21 @@
+
+<div class="primary-button-main">
+    <div class="mat-button-container">
+        <button mat-raised-button
+            type="{{dosubmit ? 'submit' : 'button'}}"
+            color="primary"
+            [disabled]="readonly"
+            (click)="onclick.emit($event)"
+           > {{ placeholder }}
+        </button>
+
+        <mat-progress-bar (click)="$event.stopPropagation()"
+            mode="indeterminate" 
+            *ngIf="pending">
+        </mat-progress-bar>
+    </div>
+    
+    <mat-hint (click)="$event.stopPropagation()">
+        {{hint}}
+    </mat-hint>
+</div>

@@ -1,0 +1,76 @@
+import { Injectable }  from '@angular/core';
+import { Router, Event as RouterNavigationEvent, NavigationEnd, ActivatedRouteSnapshot as Snapshot, Params } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+
+import { IRoute } from '../models';
+
+@UntilDestroy()
+@Injectable({ providedIn: "root" })
+export class RouterHistoryService {  
+    private _previousRoutePath: string | null;
+
+    constructor(
+        private readonly router: Router,
+    ) {       
+        this.router.events.pipe(untilDestroyed(this))
+        .subscribe((event: RouterNavigationEvent): void => {
+            if(event instanceof NavigationEnd) {
+                const snapshots: Array<Snapshot> = this._resolveRouterSnapshotsTree(this.router);
+                const routes: Array<IRoute> = this._buildRouterHistoryTree(snapshots);
+                console.log(routes)
+                this._previousRoutePath = routes.map((route: IRoute) => {
+                    return route.path
+                }).join("/")
+            }
+        })
+    }
+
+    public get isCurrentRouteDisabled(): boolean {
+        return this._previousRoutePath ? false : true;
+    }
+
+    public revert(): void {
+        this._previousRoutePath ? this.router.navigate([ this._previousRoutePath ]) : null;
+    }
+
+    private _buildRouterHistoryTree(snapshots: Array<Snapshot>): Array<IRoute> {
+        const tree: Array<IRoute> = [];
+        
+        snapshots.forEach((snapshot: Snapshot, sindex: number) => {
+            const history: Array<IRoute> = snapshot.routeConfig?.data?.["history"];
+       
+            history?.forEach((route: IRoute, rindex: number) => {
+                const id: number = parseInt(`${sindex}${rindex}`);
+                const path: string = this._resolveRoutePath(snapshot.params, route.path);
+                   
+                tree.push({ ...route, id, path });
+            });
+        })
+        tree.pop();
+
+        return tree;
+    }
+
+    private _resolveRoutePath(params: Params, path: string): string {
+        const routes: Array<string>  = path?.split("/") || [];
+
+        routes.forEach((route: string, index: number) => {
+            routes[index] = params[route] || route
+        })
+
+        return routes.join("/");
+    }
+
+    private _resolveRouterSnapshotsTree(router: Router): Array<Snapshot> {
+        const snapshots: Array<Snapshot> = [];
+
+        let snapshot: Snapshot = router.routerState.snapshot.root;
+        do {
+            snapshots.push(snapshot)
+
+            snapshot = snapshot.firstChild!;
+        } while (snapshot);
+
+        return snapshots.filter(snapshot => snapshot.url[0]);
+    }
+}

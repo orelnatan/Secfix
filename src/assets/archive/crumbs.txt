@@ -1,0 +1,140 @@
+import { Component } from '@angular/core';
+import { NavigationEnd, Router, Event as RouterNavigationEvent, ActivatedRoute, ActivatedRouteSnapshot, NavigationStart, Route, Data } from '@angular/router';
+import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
+
+interface ICrumb {
+   label: string;
+}
+
+@UntilDestroy()
+@Component({
+    selector: 'breadcrumbs',
+    templateUrl: './breadcrumbs.component.html',
+    styleUrls: ['./breadcrumbs.component.scss'],
+})
+export class BreadcrumbsComponent {
+    routes: Array<string> = [];
+    crumbs: Array<ICrumb> = [];
+
+    constructor(
+        private readonly router: Router,
+        private readonly activatedRoute: ActivatedRoute
+    ) {
+        this.router.events.pipe(untilDestroyed(this))
+        .subscribe((event: RouterNavigationEvent): void => {
+            if(event instanceof NavigationStart) {
+                this.crumbs = [];
+            }
+
+            if(event instanceof NavigationEnd) {   
+                this.routes = this._resolveRoutes();
+
+                console.log(this.activatedRoute);
+                console.log(this.router);
+
+                this.crumbs[0] = this._resolveParentCrumbs(this.activatedRoute.snapshot);
+                this.crumbs = this.crumbs.concat(this._resolveChildrenCrumbs(this.activatedRoute.snapshot.routeConfig?.children!));
+            }
+        })
+    }
+
+    navigate(index: number): void {       
+        const path: string = this.routes.slice(0, index + 1).join("/");
+     
+        this.router.navigate([`/${path}`], { queryParamsHandling: 'preserve' });
+    }
+
+    private _resolveRoutes(): Array<string> {
+        const routes: Array<string> = decodeURIComponent(window.location.pathname).split("/");
+        routes.shift();
+        
+        return routes;
+    }
+
+    private _resolveParentCrumbs(activatedRouteSnapshot: ActivatedRouteSnapshot): ICrumb {
+        if(!activatedRouteSnapshot.data['breadcrumbs']) return {} as ICrumb;
+
+        return activatedRouteSnapshot.data['breadcrumbs'];
+    }
+
+    private _resolveChildrenCrumbs(children: Array<Route>): Array<ICrumb> {
+        let crumbs: Array<ICrumb> = [];
+    
+        children.forEach((child: Route) => {  
+            console.log(child)
+            
+            if(child.data && child.data!['breadcrumbs']) {
+                crumbs.push(child.data!['breadcrumbs'])
+            } 
+
+            if((<any>child)._loadedRoutes) {
+                crumbs = crumbs.concat(this._resolveChildrenCrumbs((<any>child)._loadedRoutes))
+            }
+
+            if(child.children) {
+                crumbs = crumbs.concat(this._resolveChildrenCrumbs(child.children));
+            }
+        })
+
+        return crumbs;
+    }
+}
+
+
+
+<div class="breadcrumbs-main">
+    <div class="crubms-list">
+        <div class="crumb-item" *ngFor="let route of routes; let index=index; let last=last;" (click)="navigate(index)">
+            <span class="crumb-label">{{ route | titlecase | regExp: ['/[0-9]/g', '/#/g'] }}</span> <span [hidden]="last">/</span>
+        </div>
+    </div>
+</div>
+
+in DB unter "categories" table, category "Corecom officia" with id "28667" has changed to id "879" like the brand named "UNCORP"
+
+
+
+ private _resolveCrumbId(snapshot: ActivatedRouteSnapshot): string {
+        const path: string = snapshot.url[0]?.path;
+        const index: number = get(snapshot, "_lastPathIndex");
+
+        return `_${path}#${index}`;
+    }
+
+
+
+
+<div class="breadcrumbs-main">
+    <div class="crubms-list">
+        <ng-container *ngFor="let crumb of crumbs; let index=index">
+            <div class="crumb-item" 
+                [class.to-upper-case]="uppercase"
+                [class.to-lower-case]="lowercase"
+            >
+                <span [hidden]="crumb.noSeperator">/</span>
+                <span class="crumb-name"
+                    [class.active-crumb]="!crumb.disabled"
+                    [class.disabled-crumb]="crumb.disabled"
+                    [style.color]="crumb.color"
+                    (click)="crumb.disabled ? null : navigateByIndex(index)" 
+                >
+                    {{ (crumb.name || crumb.path) | toTitleCase: titlecase }}
+                </span>
+            </div> 
+        </ng-container>
+    </div>
+</div>
+
+
+
+CSS
+
+.crumb-item:first-child {
+    .crumb-seperator { display: none; }
+}
+
+.highlight-last:last-child {
+    span {
+        font-family: assistant-bold;
+    }
+}

@@ -1,0 +1,23 @@
+@import './src/assets/config/colors.scss';
+
+.utils-navbar-main {
+    display: grid;
+    align-items: center;
+    width: 100%;
+    height: 55px;
+    padding: 5px 20px;
+    background-color: $color-light-gray;
+
+    .navbar-inner {
+        display: flex;
+    }
+
+    .arrow-active {
+        cursor: pointer;
+    }
+
+    .arrow-disabled {
+        color: $color-office;
+    }
+}
+

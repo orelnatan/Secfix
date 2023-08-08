@@ -1,0 +1,36 @@
+
+<div class="root-layout-main" [style.position]="forRoot ? 'absolute' : 'static'">
+    <div class="layout-top">
+        <div class="layout-header-container">
+            <ng-content select="layout-header" select="[header-primary]"></ng-content>
+        </div>
+
+        <div class="layout-header-container">
+            <ng-content select="layout-header" select="[header-secondary]"></ng-content>
+        </div>
+
+        <div class="layout-header-container">
+            <ng-content select="layout-header" select="[header-sub]"></ng-content>
+        </div>
+    </div>
+
+    <div class="layout-body">
+        <div class="layout-sidebar-container">
+            <ng-content select="layout-sidebar" select="[side-primary]"></ng-content>
+        </div>
+
+        <div class="inner-content-container">
+            <ng-content></ng-content>
+        </div>
+
+        <div class="layout-sidebar-container">
+            <ng-content select="layout-sidebar" select="[side-secondary]"></ng-content>
+        </div>
+    </div>
+
+    <div class="layout-bottom">
+        <div class="layout-footer-container">
+            <ng-content select="layout-footer" select="[footer-primary]"></ng-content>
+        </div>
+    </div>
+</div>

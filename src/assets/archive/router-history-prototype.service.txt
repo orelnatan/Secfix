@@ -1,0 +1,32 @@
+import { Injectable, }  from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Route, Router, Event as RouterNavigationEvent, ActivatedRouteSnapshot } from '@angular/router';
+
+interface IStep {
+
+}
+
+@Injectable()
+export class NavigationTreeService {
+    constructor(
+        private readonly router: Router,
+        private readonly activatedRoute: ActivatedRoute
+    ) {}
+
+    public navigateBack(): void {
+        console.log(this.extractAllRouteParams(this.router));
+    }
+
+    extractAllRouteParams(router: Router): any {
+        // ===>>> https://stackoverflow.com/questions/42300642/how-to-get-all-route-params-data
+        const params: any = {}
+        let route: ActivatedRouteSnapshot | null = router.routerState.snapshot.root
+        do {
+            console.log(route)
+          Object.keys(route.params).forEach(
+            (key) => (params[key] = route?.params[key])
+          )
+          route = route.firstChild
+        } while (route)
+        return params
+    }
+}

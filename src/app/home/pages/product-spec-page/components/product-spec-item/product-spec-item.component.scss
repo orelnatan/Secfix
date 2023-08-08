@@ -1,0 +1,10 @@
+@import './src/assets/config/colors.scss';
+
+.product-spec-item-main {
+    padding-top: 35px;
+    text-align: center;
+
+    h1 {
+        color: $color-info;
+    }
+}

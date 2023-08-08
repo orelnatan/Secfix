@@ -1,0 +1,42 @@
+
+<div class="product-header-main">
+    <ng-container *ngIf="!loading else loader">
+        <img [src]="image" />
+    
+        <h1>{{ name }}</h1>
+        <p>{{ description }}</p>
+    </ng-container>
+
+    <ng-template #loader>
+        <ngx-skeleton-loader 
+            [count]="1" 
+            [appearance]="'circle'"
+            [theme]="{
+                'width.px': 285,
+                'height.px': 285
+            }">
+        </ngx-skeleton-loader>
+
+        <ngx-skeleton-loader 
+            [count]="1" 
+            [appearance]="'circle'"
+            [theme]="{
+                'width.px': 325,
+                'height.px': 25,
+                'border-radius.px': 20,
+                'margin-top.px': 15
+            }">
+        </ngx-skeleton-loader>
+
+        <ngx-skeleton-loader 
+            [count]="1" 
+            [appearance]="'circle'"
+            [theme]="{
+                'width.px': 525,
+                'height.px': 25,
+                'border-radius.px': 20
+            }">
+        </ngx-skeleton-loader>
+    </ng-template>
+</div>
+

@@ -1,0 +1,16 @@
+// https://stackoverflow.com/questions/43662552/getting-columns-to-wrap-in-css-grid (/* see notes below */)
+
+.elements-grid-main {
+    width: 100%;
+    margin-bottom: -12px;
+
+    .grid-container {
+        display: grid;
+        grid-gap: 15px;
+        overflow: hidden;   // "overflow: hidden" To support Safari
+        padding-bottom: 12px;
+    }
+}
+
+
+

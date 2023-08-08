@@ -1,0 +1,11 @@
+
+<div class="breadcrumbs-main">
+    <div class="crubms-list">
+        <ng-container *ngFor="let crumb of crumbs$ | async">
+            <crumb 
+                [parent]="name"
+                [crumb]="crumb">
+            </crumb>
+        </ng-container>
+    </div>
+</div>

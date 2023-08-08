@@ -1,0 +1,22 @@
+
+<page-layout>
+    <div class="products-page-main">
+        <ng-container #resolver="resolver"
+            [rxResolver]="products$"
+        >
+            <elements-grid *ngIf="!resolver.inProcess; else loader"
+                [elementMinSizePx]="255"
+            >
+                <product-card *ngFor="let product of resolver.data as products"
+                    [product]="product"> 
+                </product-card>
+            </elements-grid>
+
+            <ng-template #loader>
+                <page-loader></page-loader>
+            </ng-template>
+        </ng-container>
+    </div>
+</page-layout>
+
+

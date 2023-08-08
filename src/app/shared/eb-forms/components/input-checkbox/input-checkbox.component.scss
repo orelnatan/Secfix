@@ -1,0 +1,48 @@
+@import './src/assets/config/colors.scss';
+
+.input-checkbox-main {
+    position: relative;
+
+    .checkbox-placeholder {
+        position: absolute;
+        top: 0px;
+    }
+
+    .checkbox-error-wrapper {
+        position: relative;
+    }
+
+    mat-error {
+        position: absolute;
+        top: 0px;
+        font-size: 75%;
+        white-space: nowrap;
+    }
+
+    ::ng-deep .mat-checkbox-ripple .mat-ripple-element {
+        background-color: transparent !important
+    }
+
+    ::ng-deep .mat-checkbox-checked .mat-checkbox-background, 
+    .mat-checkbox-indeterminate .mat-checkbox-background {
+        background-color: $color-primary !important;
+    }
+
+    &.input-error-state {
+        ::ng-deep .mat-checkbox-disabled .mat-checkbox-label {
+            color: $color-error !important;
+        }
+
+        ::ng-deep .mat-checkbox-frame {
+            border-color: $color-error !important
+        }
+
+        mat-checkbox-indeterminate.mat-accent 
+        .mat-checkbox-background, 
+        .error-state ::ng-deep
+        .mat-checkbox-checked.mat-accent
+        .mat-checkbox-background {
+            background-color: $color-error !important
+        }
+    }
+}

@@ -1,0 +1,12 @@
+
+<div class="utils-navbar-main">
+    <div class="navbar-inner">
+        <div class="arrow-back-container" redirect #redirect="redirect">
+            <mat-icon class="arrow-active" *ngIf="redirect.url; else disabledArrow"> {{ 'arrow_back_ios' }} </mat-icon>
+            
+            <ng-template #disabledArrow>
+                <mat-icon class="arrow-disabled"> {{ 'arrow_back_ios' }} </mat-icon>
+            </ng-template>
+        </div>
+    </div>
+</div>

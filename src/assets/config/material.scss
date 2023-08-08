@@ -1,0 +1,12 @@
+@import './colors';
+
+mat-form-field {
+    width: 100%;
+}
+
+.loader-modal {
+    .mat-dialog-container { 
+        box-shadow: none;
+        background: transparent;
+    }
+}

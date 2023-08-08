@@ -1,0 +1,60 @@
+
+<page-layout>
+    <div class="product-spec-page-main">
+        <ng-container #resolver="resolver"
+            [rxResolver]="product$"
+            [default]="{}"
+        >
+            <ng-container *ngLet="resolver.data as product">
+                <div class="product-spec-view" >
+                    <product-header
+                        [name]="product.name"
+                        [description]="product.description"
+                        [image]="product.image"
+                        [loading]="resolver.inProcess">
+                    </product-header>
+                    
+                    <ng-container *ngIf="!resolver.inProcess else loading">
+                        <div class="elements-grid-container">
+                            <elements-grid [elementMinSizePx]="255">
+                                <product-spec-item
+                                    [title]="'Serial'"
+                                    [value]="product.serial">
+                                </product-spec-item>
+
+                                <product-spec-item
+                                    [title]="'Added'"
+                                    [value]="(product.added | date)!">
+                                </product-spec-item>
+            
+                                <product-spec-item
+                                    [title]="'Width'"
+                                    [value]="product.width | suffix: 'cm'">
+                                </product-spec-item>
+            
+                                <product-spec-item
+                                    [title]="'Height'"
+                                    [value]="product.height | suffix: 'cm'">
+                                </product-spec-item>
+            
+                                <product-spec-item
+                                    [title]="'Weight'"
+                                    [value]="product.weight | suffix: 'g'">
+                                </product-spec-item>
+            
+                                <product-spec-item
+                                    [title]="'Price'"
+                                    [value]="product.price | suffix: '$'">
+                                </product-spec-item>
+                            </elements-grid>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+
+            <ng-template #loading>
+                <page-loader></page-loader>
+            </ng-template>
+        </ng-container>
+    </div>
+</page-layout>

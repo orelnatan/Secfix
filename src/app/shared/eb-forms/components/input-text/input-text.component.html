@@ -1,0 +1,16 @@
+
+<div class="input-text-main" [disabledState]="readonly">
+    <mat-form-field *ngIf="control">
+        <input matInput 
+            type="text"
+            value="{{value}}" 
+            placeholder="{{placeholder}}"
+            [errorStateMatcher]="matcher"
+            [formControl]="control | abstractToFormControl"
+            [readonly]="readonly"
+            (input)="onchange.emit($event.target.value)">
+            
+        <mat-hint>{{ hint }}</mat-hint>
+        <mat-error>{{ validation | validation: control.errors! }}</mat-error>
+    </mat-form-field>
+</div>

@@ -1,0 +1,27 @@
+import { Pipe, PipeTransform } from '@angular/core';
+import { ICrumb } from '../models';
+
+@Pipe({
+   name: 'skipCrumbs',
+})
+export class VisibilityPipe implements PipeTransform {
+    transform(crumbs: Array<ICrumb>, skipBefore?: string, skipAfter?: string): Array<ICrumb> { 
+        let routes: Array<string> = [];
+
+        routes = crumbs.map(crumb => crumb.route);
+        if(routes.includes(skipBefore!)) {
+            while(crumbs[0].route != skipBefore) {
+                crumbs.shift();
+            }
+        }
+        
+        routes = crumbs.map(crumb => crumb.route);
+        if(routes.includes(skipAfter!)) {
+            while(crumbs[crumbs.length - 1].route != skipAfter) {
+                crumbs.pop();
+            }
+        }
+
+        return crumbs.filter(crumb => !crumb.skip);
+    }
+}
