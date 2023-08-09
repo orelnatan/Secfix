@@ -8,7 +8,7 @@ import { Secfix, GlobalEventTypes, StorageKeys, StorageValues } from '../models'
 const LOCAL_STORAGE_NAME: string = "Secfix";
 
 @Interceptor([{ type: GlobalEventTypes.Logout, action: "clear" }])
-@Injectable()
+@Injectable({ providedIn: "root"} )
 export class SecfixLocalStorageService {
     private _storage: Secfix;
 

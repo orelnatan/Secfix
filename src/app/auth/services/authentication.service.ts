@@ -3,9 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';  
 
 import { environment } from '@secfix/env/environment';
-import { IUser } from '@secfix/shared/models';
 
-import { ILogin } from '../models';
+import { ILogin, IUser } from '../models';
 
 @Injectable()
 export class AuthenticationService {

@@ -1,21 +1,23 @@
 
 <div class="app-navbar-main shadow-border-shallow">
    <div class="navbar-inner">
-      <div class="avatar-container">
-         <mat-icon>{{ 'waving_hand' }}</mat-icon>
-         <span>{{ getGreetingText(secfixLocalStorageService.retrieve(keys.User) | async) }}</span>
-        
-         <div class="img-container">
-            <img [src]="getUserAvatar(secfixLocalStorageService.retrieve(keys.User) | async)" />
-         </div>
-      </div>
-      
-      <div class="icons-container" *ngIf="secfixLocalStorageService.retrieve(keys.User) | async">
-         <mat-icon (click)="logout.emit()"> {{ 'logout' }} </mat-icon>
-         <mat-icon> {{ 'account_circle' }} </mat-icon>
-         <mat-icon> {{ 'settings' }} </mat-icon>
-         <mat-icon> {{ 'info' }} </mat-icon>
-         <mat-icon [routerLink]="['./']"> {{ 'home' }} </mat-icon>
-      </div>
+        <ng-container *ngLet="user$ | async as user">
+            <div class="avatar-container">
+                <mat-icon>{{ 'waving_hand' }}</mat-icon>
+                <span>{{ user ? "Hi, Welcome back " + user?.name : "Hi, Hello There Guest!" }}</span>
+            
+                <div class="img-container">
+                    <img [src]="user?.avatar || '../../../../assets/images/png/avatar_empty.png'" />
+                </div>
+            </div>
+            
+            <div class="icons-container" *ngIf="user">
+                <mat-icon (click)="logout.emit()"> {{ 'logout' }} </mat-icon>
+                <mat-icon> {{ 'account_circle' }} </mat-icon>
+                <mat-icon> {{ 'settings' }} </mat-icon>
+                <mat-icon> {{ 'info' }} </mat-icon>
+                <mat-icon [routerLink]="['./']"> {{ 'home' }} </mat-icon>
+            </div>
+        </ng-container>
    </div>
 </div>

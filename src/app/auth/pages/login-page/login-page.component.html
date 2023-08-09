@@ -4,17 +4,11 @@
         <div class="login-form-container shadow-border-shallow">
             <img [src]="'../../../../favicon.svg'" />
 
-            <ng-container #resolver="resolver"
-                [rxResolver]="login$"
-                (resolved)="loginSuccess($event)" 
-                (failed)="loginFailed($event)"
-            >
-                <login-form
-                    (onsubmit)="handleSubmit($event)"
-                    [login]="login"
-                    [loading]="resolver.inProcess">
-                </login-form>
-            </ng-container>
+            <login-form
+                (onsubmit)="handleSubmit($event)"
+                [login]="login"
+                [loading]="(inProgress$ | async)!">
+            </login-form>
         </div>
     </div>
 </page-layout>

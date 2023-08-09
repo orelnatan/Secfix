@@ -5,6 +5,7 @@
     "skipLibCheck": true, 
     "baseUrl": "./",
     "paths": {
+      "@secfix/store": ["src/app/store"],
       "@secfix/core/*": ["src/app/core/*"],
       "@secfix/layout/*": ["src/app/layout/*"],
       "@secfix/shared/*": ["src/app/shared/*"],

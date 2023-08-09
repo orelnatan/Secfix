@@ -1,4 +1,4 @@
-import { UserType } from "@secfix/shared/models";
+import { UserType } from "./user-type.enum";
 
 export interface IUser {
     id: number;

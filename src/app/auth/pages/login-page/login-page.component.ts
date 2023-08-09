@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { SecfixLocalStorageService } from '@secfix/core/services';
-import { StorageKeys } from '@secfix/core/models';
-import { AuthenticationService } from '@secfix/auth/services';
+import { AppState } from '@secfix/store';
+import { AuthActions, AuthSelectors } from '@secfix/auth/store';
 import { ILogin } from '@secfix/auth/models';
-import { IUser } from '@secfix/shared/models';
 
 @Component({
   selector: 'login-page',
@@ -22,29 +18,19 @@ export class LoginPageComponent {
     "password": "78freweb5d4654"
   } as ILogin;
   
-  login$: Observable<IUser>;
+  inProgress$: Observable<boolean>;
 
   constructor(
-    private readonly matSnackbar: MatSnackBar,
-    private readonly authenticationService: AuthenticationService,
-    private readonly secfixLocalStorageService: SecfixLocalStorageService,
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly router: Router
-  ) {}
+    private readonly store$: Store<AppState>,
+  ) {
+        this.inProgress$ = this.store$.select(
+            AuthSelectors.getInProgress
+        );
+    }
 
   handleSubmit(login: ILogin): void {
-    this.login$ = this.authenticationService.login(login);
-  }
-
-  loginSuccess(user: IUser): void {
-    this.secfixLocalStorageService.store(StorageKeys.User, user);
-    
-    this.router.navigate([this.activatedRoute.snapshot.queryParams['returnUrl'] || "/home"]);
-  }
-
-  loginFailed(error: HttpErrorResponse): void {
-    this.matSnackbar.open(error.error.message, 'X', {
-        panelClass: ["snak-error-state"]
-    });
+    this.store$.dispatch(new AuthActions.Login(
+        { login: { ...login } }
+    ));
   }
 }

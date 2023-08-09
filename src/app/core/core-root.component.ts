@@ -1,14 +1,10 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
-import { Interceptor, GlobalEventsService } from '@secfix/shared/global-events';
+import { AppState } from '@secfix/store';
+import { CoreActions } from '@secfix/core/store';
+import { AuthActions } from '@secfix/auth/store';
 
-import { GlobalEventTypes } from './models';
-
-@Interceptor([
-    { type: GlobalEventTypes.Logout, action: "exitApp" },
-    { type: GlobalEventTypes.InProgress, action: "loading" }
-])
 @Component({
   selector: 'core-root',
   template: `
@@ -21,20 +17,17 @@ import { GlobalEventTypes } from './models';
     </root-layout>
   `,
 })
-export class CoreRootComponent {
+export class CoreRootComponent implements OnInit {
     constructor(
-      private readonly router: Router,
-      private readonly globalEventsService: GlobalEventsService
+      private readonly store$: Store<AppState>,
     ) {}
 
-    dispatchLogout(): void {
-        this.globalEventsService.dispatch(
-            GlobalEventTypes.Logout
-        )
+    ngOnInit(): void {
+        this.store$.dispatch(new CoreActions.AutoLogin());
     }
 
-    exitApp(): void {
-        this.router.navigate(['/auth']);
+    dispatchLogout(): void {
+        this.store$.dispatch(new AuthActions.Logout());
     }
 }
 

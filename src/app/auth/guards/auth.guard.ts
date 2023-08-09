@@ -1,10 +1,12 @@
 import { Injectable, } from '@angular/core';
 import { Router, UrlTree, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, Subscriber } from 'rxjs';
+import { Store } from '@ngrx/store';
 
-import { SecfixLocalStorageService } from '@secfix/core/services';
-import { StorageKeys } from '@secfix/core/models';
-import { IUser } from '@secfix/shared/models';
+import { AppState } from '@secfix/store';
+import { AuthSelectors } from '@secfix/auth/store';
+
+import { IUser } from '../models';
 
 const BLOCK_WHILE_AUTHENTICATED: boolean = false;
 const REDIRECT_TO_WHILE_NOT_AUTHENTICATED: string = "/auth";
@@ -13,7 +15,7 @@ const REDIRECT_TO_WHILE_AUTHENTICATED: string = "/home";
 @Injectable()
 export class AuthGuard implements CanActivateChild {
     constructor(
-        private readonly secfixLocalStorageService: SecfixLocalStorageService,
+        private readonly store$: Store<AppState>,
         private readonly router: Router
     ) {}
 
@@ -21,9 +23,9 @@ export class AuthGuard implements CanActivateChild {
         const blockWhileAuthenticated: boolean = route.data['blockWhileAuthenticated'] || BLOCK_WHILE_AUTHENTICATED;
         const redirectToWhileNotAuthenticated: string = route.data['redirectToWhileNotAuthenticated'] || REDIRECT_TO_WHILE_NOT_AUTHENTICATED;
         const redirectToWhileAuthenticated: string = route.data['redirectToWhileAuthenticated'] || REDIRECT_TO_WHILE_AUTHENTICATED;
-      
+
         return new Observable((observer: Subscriber<boolean | UrlTree>): void => {
-            this.secfixLocalStorageService.retrieve<IUser>(StorageKeys.User).subscribe((user: IUser): void => {
+            this.store$.select(AuthSelectors.getUser).subscribe((user: IUser): void => {
                 if(!blockWhileAuthenticated) { 
                     // Block while not authenticated(default)
                     observer.next(user ? true : this.router.createUrlTree([redirectToWhileNotAuthenticated], { 

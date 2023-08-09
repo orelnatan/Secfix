@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 
 import { LayoutModule } from '@secfix/shared/layout';
 import { DirectivesModule } from '@secfix/shared/directives';
-import { SnackbarModule } from '@secfix/shared/snackbar';
 import { EbFormsModule } from '@secfix/shared/eb-forms';
 import { ValidatorsModule } from '@secfix/auth/validators';
 
@@ -20,7 +19,6 @@ import { CommonModule } from '@angular/common';
     imports: [ 
         CommonModule,
         LayoutModule,
-        SnackbarModule,
         DirectivesModule,
         FormsModule,
         DirectivesModule,

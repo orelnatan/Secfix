@@ -1,9 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from '@secfix/core/guards';
-
 import { AuthRootComponent } from './auth-root.component';
+import { AuthGuard } from './guards';
 
 const routes: Routes = [
     { path: '', redirectTo: 'login', pathMatch: 'full' },

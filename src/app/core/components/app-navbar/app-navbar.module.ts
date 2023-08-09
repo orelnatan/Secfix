@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 
+import { DirectivesModule } from '@secfix/shared/directives';
+
 import { AppNavbarComponent } from './app-navbar.component';
 
 @NgModule({
@@ -13,6 +15,7 @@ import { AppNavbarComponent } from './app-navbar.component';
         CommonModule,
         RouterLink,
         MatIconModule,
+        DirectivesModule
     ],
     exports: [
         AppNavbarComponent
