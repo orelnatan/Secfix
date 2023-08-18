@@ -9,7 +9,6 @@ import { IFamily } from '@secfix/home/models';
 
 import { EntitiesAbstractService } from './entities-abstract.service';
 
-@Interceptor([{ type: GlobalEventTypes.Logout, action: "dispose" }], [HttpClient])
 @Injectable()
 export class FamiliesService implements EntitiesAbstractService {
     private _families: Record<number, IFamily[]> = {};

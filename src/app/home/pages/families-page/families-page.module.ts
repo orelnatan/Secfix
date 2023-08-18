@@ -18,7 +18,6 @@ import { FamiliesPageComponent } from './families-page.component';
         LayoutModule,
         FamilyCardModule,
         PageLoaderModule,
-        DirectivesModule,
         ElementsGridModule,
         RouterModule.forChild([
             { path: '', redirectTo: 'families', pathMatch: 'full' },

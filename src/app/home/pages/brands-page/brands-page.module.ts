@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { LayoutModule } from '@secfix/shared/layout';
-import { DirectivesModule } from '@secfix/shared/directives';
-import { ElementsGridModule, SpinnerModule } from '@secfix/shared/components';
+import { ElementsGridModule } from '@secfix/shared/components';
 import { BrandCardModule, PageLoaderModule } from '@secfix/home/components';
 
 import { BrandsPageComponent } from './brands-page.component';
@@ -17,10 +16,8 @@ import { BrandsPageComponent } from './brands-page.component';
         CommonModule,
         LayoutModule,
         BrandCardModule,
-        DirectivesModule,
         ElementsGridModule,
         PageLoaderModule,
-        SpinnerModule,
         RouterModule.forChild([
             { path: '', component: BrandsPageComponent },
         ])

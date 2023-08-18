@@ -1,21 +1,17 @@
 
 <page-layout>
     <div class="families-page-main">
-        <ng-container #resolver="resolver"
-            [rxResolver]="families$"
+        <elements-grid *ngIf="!(inProgress$ | async); else loader"
+            [elementMinSizePx]="255"
         >
-            <elements-grid *ngIf="!resolver.inProcess; else loader"
-                [elementMinSizePx]="255"
-            >
-                <family-card *ngFor="let family of resolver.data as families"
-                    [family]="family"> 
-                </family-card>
-            </elements-grid>
+            <family-card *ngFor="let family of families$ | async as families"
+                [family]="family"> 
+            </family-card>
+        </elements-grid>
 
-            <ng-template #loader>
-                <page-loader></page-loader>
-            </ng-template>
-        </ng-container>
+        <ng-template #loader>
+            <page-loader></page-loader>
+        </ng-template>
     </div>
 </page-layout>
 

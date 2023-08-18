@@ -12,7 +12,7 @@ import { AuthActions } from '@secfix/auth/store';
         <layout-header header-primary>
             <app-navbar (logout)="logout.show()"></app-navbar>
         </layout-header>
- 
+
         <router-outlet></router-outlet>
     </root-layout>
   `,

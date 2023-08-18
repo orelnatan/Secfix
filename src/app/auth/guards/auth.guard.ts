@@ -1,7 +1,7 @@
 import { Injectable, } from '@angular/core';
 import { Router, UrlTree, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { Observable, Subscriber } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { Observable, Subscriber } from 'rxjs';
 
 import { AppState } from '@secfix/store';
 import { AuthSelectors } from '@secfix/auth/store';

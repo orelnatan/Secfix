@@ -6,12 +6,14 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { CoreStoreModule } from '@secfix/core/store';
 import { AuthStoreModule } from '@secfix/auth/store';
+import { HomeStoreModule } from '@secfix/home/store';
 
 @NgModule({
     imports: [
 		CommonModule,
-        AuthStoreModule,
         CoreStoreModule,
+        AuthStoreModule,
+        HomeStoreModule,
         StoreModule.forRoot({}),
 		EffectsModule.forRoot([]),
         StoreDevtoolsModule.instrument({

@@ -11,9 +11,6 @@ import { coreReducer } from './core.reducer';
         CommonModule,
         StoreModule.forFeature('core', coreReducer),
         EffectsModule.forFeature([ CoreEffects ]),
-    ],
-    providers: [ 
-        CoreEffects
     ]
 })
 export class CoreStoreModule {}

@@ -17,7 +17,6 @@ import { authReducer } from './auth.reducer';
         EffectsModule.forFeature([ AuthEffects ]),
     ],
     providers: [ 
-        AuthEffects,
         AuthenticationService
     ]
 })

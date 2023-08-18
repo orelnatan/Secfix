@@ -9,7 +9,6 @@ import { IBrand } from '@secfix/home/models';
 
 import { EntitiesAbstractService } from './entities-abstract.service';
 
-@Interceptor([{ type: GlobalEventTypes.Logout, action: "dispose" }], [HttpClient])
 @Injectable()
 export class BrandsService implements EntitiesAbstractService {
     private _brands: Array<IBrand> | null;

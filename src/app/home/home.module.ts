@@ -4,7 +4,6 @@ import { TitleCasePipe } from '@angular/common';
 import { LayoutModule } from '@secfix/shared/layout';
 import { CrumbsNavbarModule, SideNavbarModule, UtilsNavbarModule } from '@secfix/shared/components';
 
-import { BrandsService, CategoriesService, FamiliesService, ProductsService } from './services';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeRootComponent } from './home-root.component';
 
@@ -21,10 +20,6 @@ import { HomeRootComponent } from './home-root.component';
     ],
     providers: [
         TitleCasePipe,
-        BrandsService,
-        CategoriesService,
-        FamiliesService,
-        ProductsService
     ]
 })
 export class HomeModule {}

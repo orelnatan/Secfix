@@ -18,7 +18,6 @@ import { ProductsPageComponent } from './products-page.component';
         LayoutModule,
         ProductCardModule,
         PageLoaderModule,
-        DirectivesModule,
         ElementsGridModule,
         RouterModule.forChild([
             { path: '', redirectTo: 'products', pathMatch: 'full' },

@@ -9,7 +9,6 @@ import { ICategory } from '@secfix/home/models';
 
 import { EntitiesAbstractService } from './entities-abstract.service';
 
-@Interceptor([{ type: GlobalEventTypes.Logout, action: "dispose" }], [HttpClient])
 @Injectable()
 export class CategoriesService implements EntitiesAbstractService {
     private _categories: Record<number, ICategory[]> = {};

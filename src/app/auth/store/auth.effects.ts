@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, tap, } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { StorageKeys } from '@secfix/core/models';
 import { SecfixLocalStorageService } from '@secfix/core/services';
 import { AuthenticationService } from '@secfix/auth/services';
 
-import * as AuthActions from './auth.actions';
 import { IUser } from '../models';
+
+import * as AuthActions from './auth.actions';
 
 @Injectable()
 export class AuthEffects {

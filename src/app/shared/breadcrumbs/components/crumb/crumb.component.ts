@@ -19,10 +19,10 @@ export class CrumbComponent implements OnChanges {
 
     private _resolveAsyncCrumb(asyncCrumb: Promise<ICrumb>): void {
         this.loading = true;
-
+        
         asyncCrumb.then((crumb: ICrumb): void => {
             this.crumb = { ... this.crumb, ... crumb };
-
+            
             this.loading = false;
         });
     }
